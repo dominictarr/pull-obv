@@ -6,9 +6,12 @@ module.exports = function More (reduce, get) {
   var fn
   function obv (_fn, immediate) {
     fn = _fn
-    if(immediate !== false && _fn(state) === true) obv.more()
+    if(immediate !== false && fn(state) === true) obv.more()
     return function () {
       fn = null
+      get(true, function () {
+        state.ended = true
+      })
     }
   }
 
@@ -17,7 +20,6 @@ module.exports = function More (reduce, get) {
   obv.more = function () {
     if(state.reading) return //only allow one request at a time
     state.reading = true
-    console.log('reading...')
     get(null, function (err, data) {
       state.reading = false
       if(err) state.ended = err
@@ -30,9 +32,4 @@ module.exports = function More (reduce, get) {
 
   return obv
 }
-
-
-
-
-
 
