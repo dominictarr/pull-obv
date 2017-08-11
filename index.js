@@ -9,6 +9,7 @@ module.exports = function More (reduce, get, state) {
   var fn
   //implement an observable
   function obv (fn, immediate) {
+    if(!fn) return state
     listeners.push(fn)
     if(immediate !== false && fn(state) === true) obv.more()
     return function () {
