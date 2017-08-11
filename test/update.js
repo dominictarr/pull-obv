@@ -106,4 +106,16 @@ tape('multiple listeners', function (t) {
 
 
 
+tape('initial state', function (t) {
+  var obv = More(function (sum, item) {
+    return (sum || 0) + item
+  }, function (_, cb) {
+    cb(null, i++)
+  }, 10)
+
+  t.equal(obv(), 10)
+
+  t.end()
+
+})
 
