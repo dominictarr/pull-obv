@@ -27,7 +27,6 @@ module.exports = function More (reduce, get) {
       else obv.value = state = reduce(state, data)
 
       var more = false
-      console.log(listeners, state.ended)
       if(state) {
         for(var i = 0;i < listeners.length; i++)
           more = listeners[i](state) || more
@@ -39,6 +38,7 @@ module.exports = function More (reduce, get) {
 
   return obv
 }
+
 
 
 
