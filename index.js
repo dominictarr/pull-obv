@@ -1,7 +1,8 @@
 
-module.exports = function More (reduce, get) {
+module.exports = function More (reduce, get, state) {
 
-  var state = reduce(null)
+  if(!state)
+    state = reduce(state, null)
 
   var listeners = []
 
