@@ -32,7 +32,6 @@ tape('single', function (t) {
 
 })
 
-
 tape('async', function (t) {
 
   var i = 0
@@ -73,3 +72,38 @@ tape('init', function (t) {
   t.equal(obv.value, 1)
   t.end()
 })
+
+tape('multiple listeners', function (t) {
+  var i = 0
+  var obv = More(function (sum, item) {
+    return (sum || 0) + item
+  }, function (_, cb) {
+    cb(null, i++)
+  })
+
+  var count = 0
+  obv(function (a) {
+    count ++
+  })
+  obv(function (a) {
+    count ++
+  })
+
+  obv.more()
+
+  t.equal(count, 2)
+
+  obv(function (a) {
+    count ++
+  })
+  t.equal(count, 3)
+
+  obv.more()
+  t.equal(count, 6)
+
+  t.end()
+})
+
+
+
+
