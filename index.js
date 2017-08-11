@@ -38,12 +38,12 @@ module.exports = function More (reduce, get, state) {
     })
   }
 
+  obv.set = function (_state) {
+    state = _state
+    for(var i = 0;i < listeners.length; i++)
+      listeners[i](state)
+  }
+
   return obv
 }
-
-
-
-
-
-
 
