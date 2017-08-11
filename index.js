@@ -3,15 +3,16 @@ module.exports = function More (reduce, get) {
 
   var state = reduce(null)
 
+  var listeners = []
+
   var fn
-  function obv (_fn, immediate) {
-    fn = _fn
+  //implement an observable
+  function obv (fn, immediate) {
+    listeners.push(fn)
     if(immediate !== false && fn(state) === true) obv.more()
     return function () {
-      fn = null
-      get(true, function () {
-        state.ended = true
-      })
+      var i = listeners.indexOf(fn)
+      listeners.splice(i, 1)
     }
   }
 
@@ -25,11 +26,22 @@ module.exports = function More (reduce, get) {
       if(err) state.ended = err
       else obv.value = state = reduce(state, data)
 
-      if(fn && (state.more || fn(state) === true) && !state.ended)
+      var more = false
+      console.log(listeners, state.ended)
+      if(state) {
+        for(var i = 0;i < listeners.length; i++)
+          more = listeners[i](state) || more
+      }
+      if(more && (state && !state.ended))
         obv.more()
     })
   }
 
   return obv
 }
+
+
+
+
+
 
