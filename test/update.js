@@ -119,3 +119,28 @@ tape('initial state', function (t) {
 
 })
 
+tape('manually set state', function (t) {
+  var i = 0
+  var obv = More(function (ary, item) {
+    return ary.concat(item)
+  }, function (_, cb) {
+    cb(null, ++i)
+  }, [])
+
+  obv.more()
+
+  var rm = obv(function (a) {
+    t.deepEqual(a, [1])
+  })
+
+  rm ()
+
+  rm = obv(function (a) {
+    t.deepEqual(a, [-1, 0, 1])
+  }, false)
+
+  obv.set([-1,0].concat(obv.value))
+
+  t.end()
+})
+
