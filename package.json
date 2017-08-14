@@ -9,6 +9,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "pull-stream": "^3.6.0",
     "tape": "^4.7.0"
   },
   "scripts": {
