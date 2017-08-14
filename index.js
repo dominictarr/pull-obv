@@ -1,4 +1,3 @@
-
 module.exports = function More (reduce, get, state) {
 
   if(!state)
@@ -47,6 +46,3 @@ module.exports = function More (reduce, get, state) {
 
   return obv
 }
-
-
-
