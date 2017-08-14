@@ -1,5 +1,5 @@
 var More = require('../')
-
+var pull = require('pull-stream')
 var a = []
 for (var i = 0; i < 5; i++)
   a.push(i)
@@ -142,5 +142,22 @@ tape('manually set state', function (t) {
   obv.set([-1,0].concat(obv.value))
 
   t.end()
+})
+
+tape('emits end', function (t) {
+
+  var obv = More(function (ary, item) {
+    return ary.concat(item)
+  }, pull.values([1,2]), [])
+
+  obv(function (ary) {
+    console.log(ary)
+    if(ary.ended) t.end()
+  })
+
+  obv.more()
+  obv.more()
+  obv.more()
+
 })
 
