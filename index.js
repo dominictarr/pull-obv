@@ -21,7 +21,6 @@ module.exports = function More (reduce, get, state) {
   obv.value = state
 
   obv.more = function () {
-    console.log('more!', state.reading, state.more)
     if(state.reading) return //only allow one request at a time
     if(state.ended) return
     state.reading = true
@@ -41,7 +40,6 @@ module.exports = function More (reduce, get, state) {
   }
 
   obv.set = function (_state) {
-    console.log("SET", _state.reading)
     state = _state
     for(var i = 0;i < listeners.length; i++)
       listeners[i](state)
@@ -49,4 +47,6 @@ module.exports = function More (reduce, get, state) {
 
   return obv
 }
+
+
 
